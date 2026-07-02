@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <!-- background glow layer -->
+    <path
+        android:fillColor="#000000"
+        android:fillAlpha="0.2"
+        android:pathData="M160,800L160,160l640,320L160,800Z" />
+    <!-- foreground outline -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M320,853q-19,10 -35.5,0T268,820v-680q0,-21 16.5,-31t35.5,0l556,340q18,11 18,31t-18,31L320,853ZM348,480ZM348,754l434,-274L348,206v548Z" />
+</vector>

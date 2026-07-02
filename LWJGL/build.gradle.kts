@@ -1,0 +1,45 @@
+plugins {
+    id("java-library")
+}
+
+group = "org.lwjgl.glfw"
+
+val fatJarDeps by configurations.creating {
+    isCanBeResolved = true
+    extendsFrom(configurations.runtimeClasspath.get())
+}
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName.set("lwjgl-glfw-classes")
+    destinationDirectory.set(file("../MartianLauncher/src/main/assets/components/lwjgl3/"))
+    // Auto update the version with a timestamp so the project jar gets updated by Pojav
+    doLast {
+        val versionFile = file("../MartianLauncher/src/main/assets/components/lwjgl3/version")
+        versionFile.writeText(System.currentTimeMillis().toString())
+    }
+    from({
+        fatJarDeps.map {
+            println(it.name)
+            if (it.isDirectory) it else zipTree(it)
+        }
+    })
+    exclude("net/java/openjdk/cacio/ctc/**")
+    manifest {
+        attributes("Manifest-Version" to "3.3.6")
+        attributes("Automatic-Module-Name" to "org.lwjgl")
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
+dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    compileOnly(fileTree(mapOf("dir" to "compileOnly", "include" to listOf("*.jar"))))
+}

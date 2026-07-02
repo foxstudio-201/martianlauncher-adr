@@ -1,0 +1,76 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      variant:
+        required: true
+        type: string
+    secrets:
+      KEY_PASSWORD:
+        required: false
+      STORE_PASSWORD:
+        required: false
+      CURSEFORGE_API_KEY:
+        required: false
+
+jobs:
+  build:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: ["all", "arm", "arm64", "x86", "x86_64"]
+      fail-fast: false
+
+    env:
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          add-job-summary: "on-failure"
+
+      - name: Build APK for ${{ matrix.arch }}
+        run: |
+          chmod +x gradlew
+          ./gradlew MartianLauncher:assemble${{ inputs.variant }} -Darch=${{ matrix.arch }}
+
+      - name: Upload Release APK for ${{ matrix.arch }}
+        if: inputs.variant == 'Release'
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: release apk (${{ matrix.arch }})
+          path: MartianLauncher/build/outputs/apk/release/*.apk
+
+      - name: Upload Release Mapping for ${{ matrix.arch }}
+        if: inputs.variant == 'Release'
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: mapping (${{ matrix.arch }})
+          path: MartianLauncher/build/outputs/mapping/release/mapping.txt
+
+      - name: Upload Debug APK for ${{ matrix.arch }}
+        if: inputs.variant == 'Debug'
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: debug apk (${{ matrix.arch }})
+          path: MartianLauncher/build/outputs/apk/debug/*.apk

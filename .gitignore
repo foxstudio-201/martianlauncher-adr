@@ -1,0 +1,15 @@
+*.iml
+.gradle
+.idea
+.kotlin
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.oauth_client_id.txt
+.store_password.txt
+.key_password.txt
+.curseforge_api.txt

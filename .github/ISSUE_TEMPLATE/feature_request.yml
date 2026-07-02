@@ -1,0 +1,36 @@
+name: Feature Request
+description: 'Submit a Feature Request '
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: |
+        Which type does this feature belong to? This helps developers plan and categorize it.
+      options:
+        - 'In-Game '
+        - 'Launcher Appearance '
+        - 'Launcher Settings '
+        - 'New Feature '
+        - 'Feature Enhancement '
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Detailed Description 
+      description: |
+        Clearly and thoroughly describe your feature request
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Videos 
+      description: |
+        If necessary, you can upload screenshots or videos. 
+    validations:
+      required: false

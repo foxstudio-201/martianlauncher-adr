@@ -1,0 +1,103 @@
+name: BUG Report
+description: 'Report a bug'
+labels: [Bug]
+body:
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: |
+        The type of the current crash will be displayed at the top of the action bar on the right side of the crash page.
+      options:
+        - 'Game Problem'
+        - 'Launcher Problem'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description 
+      description: |
+        Clearly and in detail describe the issue you encountered.
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Log File
+      description: |
+        The crash page of the launcher will have a "Share Logs" button. Please upload the log provided by the launcher here.  
+        If your issue is related to a "Launcher Crash", you can find the "Share Launcher Logs" option in the launcher settings. Please upload the log archive provided by the launcher here.  
+        If your issue is related to a "Game Crash":  
+        < 2.4.3  
+        You can use a file manager to navigate to ZL2's public directory and locate the "latest_game.log" file.  
+        \>= 2.4.3  
+        You can find the "Running Log" button in the version overview page, click it to open the log menu, and then share it.  
+        **Please do not upload the game's own logs here, as the information they record is not comprehensive!**  
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Videos
+      description: |
+        Upload screenshots or videos from the most recent occurrence of the issue. This may help me identify the problem faster.
+    validations:
+      required: false
+
+  - type: textarea
+    id: repetition
+    attributes:
+      label: Reproduction Steps
+      description: |
+        Steps to reproduce the issue. Please be as detailed as possible to help me quickly locate the problem.
+      placeholder: |
+        1. xxx
+        2. xxx
+        ... *(steps to reproduce the issue)*
+      render: markdown
+    validations:
+      required: false
+
+  - type: dropdown
+    id: android-version
+    attributes:
+      label: Android Version
+      description: |
+        ZL2 does not support running on devices with Android 7 or lower!
+      options:
+        - '16'
+        - '15'
+        - '14'
+        - '13'
+        - '12'
+        - '11'
+        - '10'
+        - '9'
+        - '8'
+    validations:
+      required: true
+
+  - type: input
+    id: launcher-info
+    attributes:
+      label: Launcher Version
+      description: |
+        Provide the version number of the launcher. This can be found on the launcher’s About page. If you are using a test build from Actions, please indicate this.  
+        **Please provide the specific version number instead of vague terms like "latest version."**
+      placeholder: 2.3.3
+    validations:
+      required: true
+
+  - type: input
+    id: device-info
+    attributes:
+      label: Device Information
+      description: |
+        Providing detailed information about the device will help me troubleshoot the issue.
+      placeholder: Android 11, arm64
+    validations:
+      required: true
