@@ -130,7 +130,7 @@ private data class AccountActions(
  */
 enum class FirstLoginMenu {
     /** 不打开菜单 */
-    NONE,
+    NONE.
     /** 打开微软登录菜单 */
     MICROSOFT,
     /** 打开总登录菜单 */
