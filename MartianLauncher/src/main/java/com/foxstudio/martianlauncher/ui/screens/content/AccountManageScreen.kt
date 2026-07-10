@@ -498,7 +498,19 @@ private fun OtherLoginOperation(
     val loggingInFailedTitle = stringResource(R.string.account_logging_in_failed)
 
     when (operation) {
-        is OtherLoginOperation.None -> {}
+                is OtherLoginOperation.None -> {
+            Button(
+                onClick = {
+    actions.onIntent(AccountManageIntent.UpdateOtherLoginOp(OtherLoginOperation.OnLogin(server = "https://auth.seninadresin.com")))
+ 
+                }
+        
+                }
+            ) {
+                Text("3. Taraf Giriş")
+            }
+         
+                }
         is OtherLoginOperation.OnLogin -> {
             OtherServerLoginDialog(
                 server = operation.server,
